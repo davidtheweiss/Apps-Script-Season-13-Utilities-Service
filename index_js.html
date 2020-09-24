@@ -1,0 +1,26 @@
+<script>
+document.getElementById('submit').addEventListener('click', _ => {
+  const name = document.getElementById('name').value;
+  const school = document.getElementById('school').value;
+  const quote = document.getElementById('quote').value;
+  const photo = document.querySelector('input[type=file]').files[0];
+  const reader = new FileReader();
+  reader.addEventListener('load', e => {
+    const photoData = {
+      filename: photo.name,
+      bytes: [...new Uint8Array(e.target.result)]
+    };
+    document.getElementById('result').innerText = 'Loading...';
+    google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).createNewSlide(name, school, quote, photoData);
+  });
+  reader.readAsArrayBuffer(photo);
+});
+
+function onSuccess() {
+  document.getElementById('result').innerText = 'Congrats, you are now Registered!';
+}
+
+function onFailure() {
+  document.getElementById('result').innerText = 'An Error Occured. Please try again';
+}
+</script>
