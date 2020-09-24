@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Krub&display=swap" rel="stylesheet">
+    <?!= includeExternalFile('index_css'); ?>
+  </head>
+  
+  <body>
+    <div id='container'>
+      <div id='image'>
+        <img src='https://branding.web-resources.upenn.edu/sites/default/files/vertical-reversed.png'>
+      </div>
+      <div id='form'>
+        <h1>Register for this Year's Commencement</h1>
+        <div id='data' autocomplete="off">
+          <label for="name">Name (First and Last)</label>
+          <input type="text" name="name" id="name" autocomplete='off'><br>
+          <label for="school">School</label>
+          <input type="text" name="school" id="school" autocomplete='off'><br>
+          <label for="quote">Yearbook Quote</label>
+          <input type="text" name="quote" id="quote" autocomplete='off'><br>
+          <label for="photo">Senior Photo</label>
+          <input type="file" name="photo" id="photo" autocomplete='off'><br>
+          <input type="submit" value="Submit" id='submit'>
+          <h3 id='result'></h3>
+        </div>
+      </div>
+    </div>
+    <?!= includeExternalFile('index_js'); ?>
+  </body>
+</html>
