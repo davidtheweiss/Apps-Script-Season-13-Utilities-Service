@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    
+    <style>
+      * {
+        font-family: 'Varela Round', sans-serif; 
+      }
+      
+      button {
+        cursor: pointer;
+        background-image: linear-gradient(to right, #00d2ff, #3a7bd5);
+        border-radius: 10px;
+        box-shadow: 0 10px 10px -5px #888;
+        padding: 10px 15px;
+        margin-top: 15px;
+        color: white;
+        border: none;
+      }
+    </style>
+    
+  </head>
+  <body>
+  
+    <h1>Load your CSV Below</h1>
+    <input type='file' accept=".csv, text/csv">
+    <button>Generate Signs</button>
+    <p></p>
+    
+    <script>
+      document.getElementsByTagName('button')[0].addEventListener('click', _ => {
+        document.getElementsByTagName('p')[0].innerText = 'Loading...';
+        const csv = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', e => {
+          google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateNameSigns(e.target.result);
+        });
+        reader.readAsText(csv);
+      });
+      
+      function onSuccess() {
+        document.getElementsByTagName('p')[0].innerText = 'Completed';
+      }
+      
+      function onFailure() {
+        document.getElementsByTagName('p')[0].innerText = 'Failed :(';
+      }
+    </script>
+    
+  </body>
+</html>
+
+
