@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <?!= includeExternalFile('sportinghuthome_css'); ?>
+  </head>
+  <body>
+    <div id='banner'>
+      <h1 style='font-family: "Bungee", cursive;'>Sporting Hut</h1>
+      <input placeholder="&#xF002;  Search" style="font-family: FontAwesome, 'Bungee', cursive">
+      <i class="fa fa-bars"></i>
+    </div>
+    <img id='banner_image' src='https://thepressure.wpengine.com/wp-content/uploads/2016/09/dempsey.jpg'>
+
+    <div id='products_container'>
+      <? for (product of getProducts()) { ?>
+      <div class='product' id='<?!= product.productID ?>' data-name='<?!= product.name ?>' data-price='<?!= product.price ?>' data-color='<?!= product.color ?>' data-size='<?!= product.size ?>' data-photo_url='<?!= product.photo_url ?>'>
+        <img src='<?!= product.photo_url ?>'>
+        <h1 style='font-family: "Bungee", cursive;'><?!= product.name ?></h1>
+      </div>
+      <? } ?>
+    </div>
+
+    <div class="w3-container">
+      <div id="product-modal" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="document.getElementById('product-modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <div id='product_highlight'>
+              <img id='product_image' src=''>
+              <div>
+                <h1 id='product_name' style='font-family: "Bungee", cursive;'></h1>
+                <h3 id='product_price' style='font-family: "Bungee", cursive; color:grey;'></h3>
+                <br><br>
+                <h3>Color</h3>
+                <h3 id='product_color' style='font-family: "Bungee", cursive;'></h3>
+                <br><br>
+                <h3>Size</h3>
+                <h3 id='product_size' style='font-family: "Bungee", cursive;'></h3>
+                <br>
+                <input id='email_input' style='text-align:center;' placeholder="Please Input Your Email">
+                <button id='place_order' data-product_id=''>Place Order</button>
+                <h6 id='confirmation'></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      [...document.getElementsByClassName('product')].forEach(element => {
+        element.addEventListener('click', _ => {
+          document.getElementById('product_image').src = element.dataset.photo_url;
+          document.getElementById('product_name').innerHTML = element.dataset.name;
+          document.getElementById('product_price').innerHTML = '$' + element.dataset.price;
+          document.getElementById('product_color').innerHTML = element.dataset.color;
+          document.getElementById('product_size').innerHTML = element.dataset.size;
+          document.getElementById('place_order').dataset.product_id = element.id;
+          document.getElementById('confirmation').innerHTML = '';
+          document.getElementById('product-modal').style.display='block';
+        })
+      })
+
+      document.getElementById('place_order').addEventListener('click', e => {
+        document.getElementById('confirmation').innerHTML = '<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>';
+        let email = document.getElementById('email_input').value;
+        let product_id = e.target.dataset.product_id;
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).placeOrder(product_id, email);
+      })
+
+      function onSuccess(orderID) {
+        document.getElementById('confirmation').innerHTML =`Congratulations! Your order is being processed. Keep this order ID for your reference: ${orderID}`;
+      }
+
+      function onFailure(err) {
+        document.getElementById('confirmation').innerHTML ='Failed! Please try again in a few moments.';
+      }
+    </script>
+  </body>
+</html>
