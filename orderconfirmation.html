@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <?!= includeExternalFile('orderconfirmation_css'); ?>
+  </head>
+  <body>
+    <div id='container'>
+      <div>
+        <h1>Thank you for your order!</h1>
+        <h4>Your order was received on: <span id='product_order_date' style='color:grey;'></span></h4>
+        <h4>Order Status: <span id='product_status' style='color:grey;'></span></h4>
+      </div>
+      <div id='order_details_container'>
+        <img id='product_image' src='' style='width:300px;'>
+        <div id='order_details'>
+          <h1 id='product_name'></h1>
+          <h3 id='product_price' style='color:grey;'></h3>
+          <br><br>
+          <h3>Color</h3>
+          <h3 id='product_color' style='color:grey;'></h3>
+          <br><br>
+          <h3>Size</h3>
+          <h3 id='product_size' style='color:grey;'></h3>
+        </div>
+      </div>
+    </div>
+    <script>
+      google.script.url.getLocation(location => {
+        google.script.run.withSuccessHandler(onSuccess).getOrderDetails(location.parameter.id);
+      })
+
+      function onSuccess(products) {
+        const product = products[0];
+        document.getElementById('product_order_date').innerHTML = product.orderPlacedDate;
+        document.getElementById('product_status').innerHTML = product.status;
+        document.getElementById('product_image').src = product.photo_url;
+        document.getElementById('product_name').innerHTML = product.name;
+        document.getElementById('product_price').innerHTML = '$' + product.price;
+        document.getElementById('product_color').innerHTML = product.color;
+        document.getElementById('product_size').innerHTML = product.size;
+      }
+    </script>
+  </body>
+</html>
