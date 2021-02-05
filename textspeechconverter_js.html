@@ -1,0 +1,52 @@
+<script>
+  const player = document.getElementById('player');
+  const textToSpeechBtn = document.getElementById('textToSpeechBtn');
+  const speechToTextBtn = document.getElementById('speechToTextBtn');
+  const preloader1 = document.getElementById('preloader1');
+  const preloader2 = document.getElementById('preloader2');
+
+
+  speechToTextBtn.addEventListener('click', _ => {
+    preloader2.style.display = 'inherit';
+    speechToTextBtn.style.display = 'none';
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', e => {
+      bytes = [...new Uint8Array(e.target.result)]
+      google.script.run.withSuccessHandler(displayText).withFailureHandler(onFailure).speechToText(bytes);
+    });
+    reader.readAsArrayBuffer(file);
+  });
+  
+  function displayText(text) {
+    preloader2.style.display = 'none';
+    speechToTextBtn.style.display = 'initial';
+    document.getElementById('speechToTextTextArea').value = text;
+  }
+
+
+  textToSpeechBtn.addEventListener('click', _ => {
+    preloader1.style.display = 'inherit';
+    textToSpeechBtn.style.display = 'none';
+    let text = document.getElementById('textToSpeechTextArea').value;
+    google.script.run.withSuccessHandler(loadAudio).withFailureHandler(onFailure).textToSpeech(text);
+  });
+
+  function loadAudio(bytes) {
+    var myBlob = new Blob([new Uint8Array(bytes)]);
+    var url = (window.URL || window.webkitURL).createObjectURL(myBlob);
+    const audio = document.getElementById('audio');
+    const source = document.getElementById('source');
+
+    source.src = url;
+    audio.load();
+    preloader1.style.display = 'none';
+    textToSpeechBtn.style.display = 'initial';
+  }
+
+
+  function onFailure(err) {
+    console.error(err);
+  }
+</script>
+
