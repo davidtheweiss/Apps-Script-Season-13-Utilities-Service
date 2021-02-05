@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <?!= includeExternalFile('textspeechconverter_css'); ?>
+  </head>
+  <body>
+
+    <div id='first_screen'>
+      <div class='title'>
+        <h1>Speech to Text Converter</h1>
+      </div>
+      <div class='grid-container'>
+        <div>
+          <input id='audioFile' type='file'>
+        </div>
+        <div>
+          <button id='speechToTextBtn'>Convert Speech to Text</button>
+          <div id='preloader2' style='display: none;'>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div>
+          <textarea id='speechToTextTextArea'></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id='second_screen'>
+      <div class='title'>
+        <h1>Text to Speech Converter</h1>
+      </div>
+      <div class='grid-container'>
+        <div>
+          <textarea id='textToSpeechTextArea' placeholder="Paste or type the text you'd like spoken here."></textarea>
+        </div>
+        <div>
+          <button id='textToSpeechBtn'>Convert Text To Speech</button>
+          <div id='preloader1' style='display: none;'>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div>
+          <audio controls="controls" id="audio">
+            <source id="source" src="" type="audio/wav" />
+          </audio>
+        </div>
+      </div>
+    </div>
+
+    <?!= includeExternalFile('textspeechconverter_js'); ?>
+  </body>
+</html>
