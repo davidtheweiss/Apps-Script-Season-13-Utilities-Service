@@ -1,0 +1,80 @@
+<script>
+	document.getElementById('signinbtn').addEventListener('click', _ => {
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    google.script.run.withSuccessHandler(signInConfirm).withFailureHandler(signInError).signIn(email, password);
+  });
+  
+  document.getElementById('registerbtn').addEventListener('click', _ => {
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    google.script.run.withSuccessHandler(registerConfirm).register(email, password);
+  });
+
+  document.getElementById('submitApptBtn').addEventListener('click', _ => {
+    let email = document.getElementById('email').value;
+    let apptDate = document.getElementById('apptDate').value;
+    google.script.run.withSuccessHandler(apptConfirm).createAppt(apptDate, email);
+  });
+  
+  function signInConfirm(email) {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('scheduleMeeting').style.display = 'inherit';
+    document.getElementById('welcome').innerText = `Welcome, ${email}`;
+  }
+
+  function signInError() {
+    document.getElementById('confirmation').innerText = 'Sorry, you couldn\'t be signed in :(';
+  }
+
+  function registerConfirm() {
+    document.getElementById('confirmation').innerText = 'Congrats! You are Registered';
+  }
+
+  function apptConfirm() {
+    document.getElementById('apptConfirmation').innerText = 'Congrats! Your Appt has been scheduled';
+  }
+
+  const tabs = Array.from(document.getElementById('tabs').children);
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      if (e.target.id == 'signUp') {
+        document.getElementById('slider').classList.add("signUpClick");
+        document.getElementById('signinbtn').style.display = 'none';
+        document.getElementById('registerbtn').style.display = 'inherit';
+      } else {
+        document.getElementById('slider').classList.remove("signUpClick");
+        document.getElementById('signinbtn').style.display = 'inherit';
+        document.getElementById('registerbtn').style.display = 'none';
+      };
+    });
+  });
+  
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+  });
+
+  var radius = 48;
+	TweenMax.staggerFromTo('.blob', 14, {
+		cycle: {
+			attr:function(i) {
+				var r = i * 90;
+				return {
+					transform:'rotate('+r+') translate('+radius+',0.1) rotate('+(-r)+')'
+				}      
+			}
+		}  
+	},
+  {
+		cycle: {
+			attr:function(i) {
+				var r = i*90+360;
+				return {
+					transform:'rotate('+r+') translate('+radius+',0.1) rotate('+(-r)+')'
+				}      
+			}
+		},
+		ease:Linear.easeNone,
+		repeat:-1
+	});
+</script>
