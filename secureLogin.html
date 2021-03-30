@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Asap&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <?!= includeExternalFile('secureLogin_css'); ?>
+  </head>
+  <body>
+    <div id='container'>
+      <div id='login'>
+        <div id='tabs'>
+          <h1 id='signIn'>Sign In</h1>
+          <h1 id='signUp'>Sign Up</h1>
+        </div>
+        <div id='slider'></div>
+        <label>Email</label>
+        <input id='email' autocomplete="off">
+        <label>Password</label>
+        <input id='password' autocomplete="off">
+        <button id='signinbtn' class='btn'>Sign In</button>
+        <button id='registerbtn' class='btn'>Register</button>
+        <p id='confirmation'></p>
+      </div>
+      <div id='scheduleMeeting'>
+        <div class="container" style='width: 300px;'>
+          <div class="panel panel-primary">
+            <div class="panel-heading" id='welcome'>Schedule an Appointment</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class='col-md-12'>
+                    <div class="form-group">
+                        <label class="control-label">Appointment Time<br><span style='font-size: 10px;'>(Each Appt is 30 min long)</span></label>
+                        <div class='input-group date' id='datetimepicker1'>
+                          <input type='text' class="form-control" id='apptDate'/>
+                          <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <input type="submit" class="btn btn-primary" id='submitApptBtn'>
+              </div>
+          </div>
+        </div>
+      </div>
+      <p id='apptConfirmation' style='color: white;'></p>
+    </div>
+
+    <div class="background_cont">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="background_svg">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+            <feBlend in2="goo" in="SourceGraphic" result="mix" />
+          </filter>
+          <linearGradient id="gradient">
+            <stop offset="5%"  stop-color="#40204c"/>
+            <stop offset="40%" stop-color="#a3225c"/>
+            <stop offset="100%" stop-color="#e24926"/>
+          </linearGradient>
+        </defs>
+        <mask id="mask">
+          <g class="blobs">
+            <circle class="blob" cx="440" cy="250" r="30" transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="500" cy="320" r="70"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="300" cy="390" r="40"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="380" cy="390" r="80"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="470" cy="450" r="20"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="670" cy="450" r="100"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+            <circle class="blob" cx="970" cy="220" r="300"  transform="rotate(0) translate(0, 0) rotate(0)"/>
+          </g>
+        </mask>
+        <rect x="0" y="0" mask="url(#mask)" fill="url(#gradient)">
+      </svg>	
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js'></script>
+    <?!= includeExternalFile('secureLogin_js'); ?>
+  </body>
+</html>
